@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from datetime import datetime
-from ..database.connection import get_db
-from ..models.models import Trial, Participant, AdverseEvent
+from database.connection import get_db
+from models.models import Trial, Participant, AdverseEvent
 
 router = APIRouter(prefix="/interoperability", tags=["Interoperability"])
 

@@ -48,7 +48,7 @@ export default function ParticipantsPage() {
               Clinical Trial Participants Registry
             </h1>
             <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
-              1,428 Enrolled
+              {participants.length} Demo Records
             </span>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
@@ -59,7 +59,7 @@ export default function ParticipantsPage() {
         <div className="flex items-center gap-2">
           <span className="text-xs font-medium text-slate-500 bg-white border border-slate-200 px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-2xs">
             <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            <span>DPDP Act 2023 Compliant De-identification</span>
+            <span>Synthetic sample data · not a privacy certification</span>
           </span>
         </div>
       </div>
@@ -68,8 +68,8 @@ export default function ParticipantsPage() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <KpiCard
           title="Total Randomized"
-          value="1,428"
-          subtitle="Across 28 centres"
+          value={participants.filter((participant) => participant.randomizedArm).length}
+          subtitle={`Across ${sites.length} demo sites`}
           icon={Users}
           status="primary"
         />

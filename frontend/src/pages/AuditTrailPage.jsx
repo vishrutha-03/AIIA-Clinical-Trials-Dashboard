@@ -44,7 +44,7 @@ export default function AuditTrailPage() {
         )
         .join('\n');
     triggerDownload(csvContent, `AIIA_CTMS_Audit_Trail_${new Date().toISOString().split('T')[0]}.csv`, 'text/csv');
-    showToast('Immutable Audit Log Exported (CSV format).');
+    showToast('Demo activity log exported as CSV.');
   };
 
   return (
@@ -57,11 +57,11 @@ export default function AuditTrailPage() {
               Enterprise Audit Trail & Electronic Signatures
             </h1>
             <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 font-mono">
-              21 CFR Part 11
+              Demo Activity Log
             </span>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-            Append-only immutable record of all clinical modifications, investigator sign-offs, and data discrepancies
+            Session-level activity examples for the presentation; this is not a validated electronic record or signature system.
           </p>
         </div>
 
@@ -81,15 +81,15 @@ export default function AuditTrailPage() {
             <Fingerprint className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="font-bold text-white">Immutable Append-Only Integrity</h3>
+            <h3 className="font-bold text-white">Demo Activity History</h3>
             <p className="text-[11px] text-slate-400 mt-0.5">
-              Each state mutation is cryptographically time-stamped and bound to the authenticated user session. Direct deletion or in-place overrides are prohibited by architecture.
+              Some demo actions are added to the activity list in browser memory. Entries are not cryptographically protected and may reset when the page reloads.
             </p>
           </div>
         </div>
         <div className="hidden md:flex items-center gap-2 text-[11px] font-mono text-teal-400 bg-slate-950 px-3 py-1.5 rounded border border-slate-800">
           <Lock className="w-3.5 h-3.5" />
-          <span>ALCOA+ Verified</span>
+          <span>NOT VALIDATED</span>
         </div>
       </div>
 

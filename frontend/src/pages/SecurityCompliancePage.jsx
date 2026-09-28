@@ -115,7 +115,7 @@ export default function SecurityCompliancePage() {
           </div>
           <h3 className="text-xs font-bold text-slate-900">Role-Based Access Control (RBAC)</h3>
           <p className="text-xs text-slate-600 leading-relaxed">
-            Strict granular permission matrices for Principal Investigators, Coordinators, Monitors, Ethics Members, PV Officers, and Regulators.
+            The demo hides modules by role and checks restricted routes. It is not an independently reviewed production authorization system.
           </p>
         </div>
 
@@ -125,7 +125,7 @@ export default function SecurityCompliancePage() {
           </div>
           <h3 className="text-xs font-bold text-slate-900">JWT & Session Security</h3>
           <p className="text-xs text-slate-600 leading-relaxed">
-            Cryptographically signed JSON Web Tokens (HMAC-SHA256) with idle expiration, CSRF defense, and HTTPS transport-level encryption.
+            The local prototype uses JWT login for API demonstrations. CSRF controls, HTTPS deployment, and production session management are not configured here.
           </p>
         </div>
 
@@ -135,7 +135,7 @@ export default function SecurityCompliancePage() {
           </div>
           <h3 className="text-xs font-bold text-slate-900">Cryptographic Data Protection</h3>
           <p className="text-xs text-slate-600 leading-relaxed">
-            AES-256 encryption at rest, TLS 1.3 in transit, and immutable SHA-256 hashing on all audit trail log entries.
+            Encryption at rest, production TLS, and tamper-evident audit storage must be configured before real participant data is used.
           </p>
         </div>
 
@@ -145,7 +145,7 @@ export default function SecurityCompliancePage() {
           </div>
           <h3 className="text-xs font-bold text-slate-900">Privacy & De-Identification</h3>
           <p className="text-xs text-slate-600 leading-relaxed">
-            Automated synthetic participant pseudonyms (P-1001..) preventing personal identifiable health information exposure.
+            Seeded participant names and identifiers are synthetic presentation data; do not enter or store real patient information in this prototype.
           </p>
         </div>
       </div>

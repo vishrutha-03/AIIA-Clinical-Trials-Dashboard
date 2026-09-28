@@ -37,17 +37,15 @@ import KpiCard from '../components/common/KpiCard';
 import StatusBadge from '../components/common/StatusBadge';
 import { useAuth } from '../context/AuthContext';
 import { useTrials } from '../context/TrialsContext';
-import {
-  ENROLLMENT_TREND_DATA,
-  TRIAL_HEALTH_DISTRIBUTION,
-  PORTFOLIO_ENROLLMENT_BARS
-} from '../data/mockData';
+import { ENROLLMENT_TREND_DATA } from '../data/mockData';
 
 export default function DashboardPage() {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   const {
     trials,
+    sites,
+    participants,
     alerts,
     milestones,
     portfolioMetrics,
@@ -55,6 +53,23 @@ export default function DashboardPage() {
   } = useTrials();
 
   const role = currentUser?.role || 'pi';
+  const healthDistribution = [
+    { name: 'On Track', value: trials.filter((trial) => trial.status !== 'Completed' && trial.riskLevel === 'Low').length, color: '#10B981' },
+    { name: 'At Risk', value: trials.filter((trial) => trial.status !== 'Completed' && trial.riskLevel === 'High').length, color: '#EF4444' },
+    { name: 'Monitor', value: trials.filter((trial) => trial.status !== 'Completed' && trial.riskLevel === 'Medium').length, color: '#F59E0B' },
+    { name: 'Completed', value: trials.filter((trial) => trial.status === 'Completed').length, color: '#64748B' },
+  ].filter((item) => item.value > 0);
+  const enrollmentBars = trials.map((trial) => ({
+    trial: trial.id,
+    shortName: trial.shortTitle,
+    enrolled: trial.currentEnrollment,
+    target: trial.targetEnrollment,
+    fill: trial.riskLevel === 'High' ? '#EF4444' : trial.riskLevel === 'Medium' ? '#F59E0B' : '#0D9488',
+  }));
+  const enrollmentGap = Math.max(portfolioMetrics.totalTarget - portfolioMetrics.totalParticipants, 0);
+  const enrollmentGapPercent = portfolioMetrics.totalTarget > 0
+    ? Math.round((enrollmentGap / portfolioMetrics.totalTarget) * 100)
+    : 0;
 
   // Filter open alerts for the dashboard
   const openAlerts = alerts.filter(a => a.status === 'Open').slice(0, 6);
@@ -72,7 +87,7 @@ export default function DashboardPage() {
               Clinical Research Portfolio
             </h1>
             <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-teal-100 text-teal-800 border border-teal-200">
-              Live Monitor
+              Demo Portfolio
             </span>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
@@ -121,13 +136,13 @@ export default function DashboardPage() {
             </span>
           </div>
           <p className="text-xs text-slate-200">
-            {role === 'pi' && 'Attention: Trial AYU-2026-004 is currently AT RISK (Score 72) due to recruitment lag and overdue monitoring.'}
-            {role === 'coordinator' && 'Attention: 44 overdue participant visits across ITRA Jamnagar and BHU Varanasi require immediate scheduling.'}
-            {role === 'monitor' && 'Attention: Site-03 (ITRA Jamnagar) is 14 days overdue for CRA Cycle 4 routine monitoring visit.'}
-            {role === 'ethics' && 'Attention: Site-01 IEC approval renewal for AYU-2026-002 is due in 9 days (Oct 04, 2026).'}
-            {role === 'pv' && 'Attention: SAE-2026-007 (Severe Hypoglycemia) requires expedited PI sign-off within 24 hours.'}
-            {role === 'admin' && 'All 8 multicenter nodes reporting healthy encrypted REST telemetry. Audit trail immutable.'}
-            {role === 'regulator' && 'Read-only verified access granted. 12 active Ayurvedic clinical studies registered under CTRI.'}
+            {role === 'pi' && `${portfolioMetrics.trialsAtRisk} trial(s) are flagged for review in this sample portfolio.`}
+            {role === 'coordinator' && `${participants.length} participant records are available in the synthetic dataset.`}
+            {role === 'monitor' && `${sites.length} sites are represented in this demo workspace.`}
+            {role === 'ethics' && `${portfolioMetrics.upcomingDeadlines} milestones are due within the next 30 days.`}
+            {role === 'pv' && `${portfolioMetrics.openSafetyReports} safety report(s) are open or under review.`}
+            {role === 'admin' && 'Use the role selector to preview each demo workspace and its navigation.'}
+            {role === 'regulator' && 'Review trial, ethics, CTRI, and audit records in this presentation workspace.'}
           </p>
         </div>
         <button
@@ -144,7 +159,7 @@ export default function DashboardPage() {
         <KpiCard
           title="Active Trials"
           value={portfolioMetrics.activeTrials}
-          subtitle="12 registered studies"
+          subtitle={`${trials.length} studies in this demo`}
           icon={FlaskConical}
           status="primary"
           onClick={() => navigate('/trials')}
@@ -152,7 +167,7 @@ export default function DashboardPage() {
         <KpiCard
           title="Active Sites"
           value={portfolioMetrics.activeSites}
-          subtitle="Multicentre network"
+          subtitle="Active sites in this dataset"
           icon={Building2}
           status="normal"
           onClick={() => navigate('/sites')}
@@ -160,7 +175,7 @@ export default function DashboardPage() {
         <KpiCard
           title="Total Participants"
           value={portfolioMetrics.totalParticipants.toLocaleString()}
-          subtitle="Target: 1,830"
+          subtitle={`Target: ${portfolioMetrics.totalTarget.toLocaleString()}`}
           icon={Users}
           trend="+8.4%"
           trendDirection="up"
@@ -187,7 +202,7 @@ export default function DashboardPage() {
         <KpiCard
           title="Open Safety Reports"
           value={portfolioMetrics.openSafetyReports}
-          subtitle="1 SAE under review"
+          subtitle="Open or under review"
           icon={ShieldAlert}
           status="warning"
           onClick={() => navigate('/pharmacovigilance')}
@@ -195,7 +210,7 @@ export default function DashboardPage() {
         <KpiCard
           title="Upcoming Deadlines"
           value={portfolioMetrics.upcomingDeadlines}
-          subtitle="Within 30 days"
+          subtitle="Milestones due in 30 days"
           icon={Clock}
           status="normal"
           onClick={() => navigate('/regulatory-ethics')}
@@ -209,7 +224,7 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-sm font-bold text-slate-900">Portfolio Enrollment Trajectory</h2>
-              <p className="text-xs text-slate-500">Planned vs actual cumulative participant enrollment (2026 YTD)</p>
+              <p className="text-xs text-slate-500">Illustrative synthetic monthly trend; totals below use the current trial records.</p>
             </div>
             <span className="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">
               Monthly Cadence
@@ -246,7 +261,7 @@ export default function DashboardPage() {
             </ResponsiveContainer>
           </div>
           <div className="mt-2 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-            <span>Current Gap: <strong>402 participants behind schedule (21.9% variance)</strong></span>
+            <span>Portfolio target gap: <strong>{enrollmentGap.toLocaleString()} participants ({enrollmentGapPercent}%)</strong></span>
             <span className="text-teal-700 font-semibold cursor-pointer hover:underline" onClick={() => navigate('/participants')}>
               Drill down by study →
             </span>
@@ -258,7 +273,7 @@ export default function DashboardPage() {
           <div>
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-sm font-bold text-slate-900">Trial Health Distribution</h2>
-              <span className="text-xs text-slate-400">12 Studies</span>
+              <span className="text-xs text-slate-400">{trials.length} studies</span>
             </div>
             <p className="text-xs text-slate-500 mb-4">Rule-engine composite risk classification</p>
 
@@ -266,7 +281,7 @@ export default function DashboardPage() {
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
-                    data={TRIAL_HEALTH_DISTRIBUTION}
+                    data={healthDistribution}
                     cx="50%"
                     cy="50%"
                     innerRadius={55}
@@ -274,7 +289,7 @@ export default function DashboardPage() {
                     paddingAngle={3}
                     dataKey="value"
                   >
-                    {TRIAL_HEALTH_DISTRIBUTION.map((entry, index) => (
+                    {healthDistribution.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
@@ -284,13 +299,13 @@ export default function DashboardPage() {
                 </PieChart>
               </ResponsiveContainer>
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                <span className="text-2xl font-black text-slate-800">12</span>
-                <span className="text-[10px] uppercase font-bold text-slate-400">Total Trials</span>
+                <span className="text-2xl font-black text-slate-800">{trials.length}</span>
+                <span className="text-[10px] uppercase font-bold text-slate-400">Demo Trials</span>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-2 mt-2">
-              {TRIAL_HEALTH_DISTRIBUTION.map(item => (
+              {healthDistribution.map(item => (
                 <div key={item.name} className="flex items-center gap-2 p-1.5 rounded bg-slate-50 border border-slate-100 text-xs">
                   <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
                   <span className="text-slate-600 text-[11px] font-medium">{item.name}</span>
@@ -304,7 +319,7 @@ export default function DashboardPage() {
             onClick={() => navigate('/risk-alerts')}
             className="mt-4 w-full py-1.5 text-xs text-red-700 font-semibold bg-red-50 hover:bg-red-100 rounded border border-red-200 transition-colors"
           >
-            Review 3 At-Risk Trials & Factors
+            Review {portfolioMetrics.trialsAtRisk} At-Risk Trials & Factors
           </button>
         </div>
       </div>
@@ -314,7 +329,7 @@ export default function DashboardPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
           <div>
             <h2 className="text-sm font-bold text-slate-900">Study Portfolio Recruitment Performance</h2>
-            <p className="text-xs text-slate-500">Enrolled participants vs protocol target across all 12 registered studies</p>
+            <p className="text-xs text-slate-500">Enrolled participants vs target across {trials.length} synthetic studies</p>
           </div>
           <span className="text-xs text-slate-500">
             Click any bar to open study workspace
@@ -324,12 +339,12 @@ export default function DashboardPage() {
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
-              data={PORTFOLIO_ENROLLMENT_BARS}
+              data={enrollmentBars}
               margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
               onClick={(state) => {
                 if (state && state.activePayload && state.activePayload.length > 0) {
-                  const item = state.activePayload[0].payload;
-                  navigate('/trials/AYU-2026-004');
+                  const trialId = state.activePayload[0].payload.trial;
+                  navigate(`/trials/${trialId}`);
                 }
               }}
             >
@@ -353,7 +368,7 @@ export default function DashboardPage() {
                 }}
               />
               <Bar dataKey="enrolled" radius={[4, 4, 0, 0]}>
-                {PORTFOLIO_ENROLLMENT_BARS.map((entry, index) => (
+                {enrollmentBars.map((entry, index) => (
                   <Cell key={`bar-${index}`} fill={entry.fill} cursor="pointer" />
                 ))}
               </Bar>

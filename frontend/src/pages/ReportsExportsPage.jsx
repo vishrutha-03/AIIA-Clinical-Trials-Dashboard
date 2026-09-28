@@ -183,7 +183,7 @@ export default function ReportsExportsPage() {
             <div>
               <h3 className="text-xs font-bold text-slate-900">Trial Portfolio Report</h3>
               <p className="text-[11px] text-slate-500 mt-1">
-                Complete overview of all 12 registered studies, phase, PI, health scores, and recruitment rates.
+                Overview of the {trials.length} synthetic studies currently available, including phase, PI, health score, and recruitment.
               </p>
             </div>
             <button

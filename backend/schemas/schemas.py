@@ -1,18 +1,24 @@
-from pydantic import BaseModel, EmailStr
 from typing import Optional, List, Dict, Any
+
+from pydantic import BaseModel, Field
+
 
 class UserLogin(BaseModel):
     email: str
     password: str
+
 
 class UserResponse(BaseModel):
     id: str
     name: str
     email: str
     role: str
-    role_label: str
+    roleLabel: Optional[str] = None
+    role_label: Optional[str] = None
     department: Optional[str] = None
     institution: Optional[str] = None
+    phone: Optional[str] = None
+
 
 class HealthScoreBreakdown(BaseModel):
     recruitment: int
@@ -22,11 +28,13 @@ class HealthScoreBreakdown(BaseModel):
     protocol_deviations: int
     safety: int
 
+
 class RiskFactor(BaseModel):
     rule: str
     factor: str
     severity: str
     message: str
+
 
 class RecommendedAction(BaseModel):
     id: str
@@ -34,6 +42,7 @@ class RecommendedAction(BaseModel):
     type: str
     priority: str
     action_code: str
+
 
 class TrialHealthResponse(BaseModel):
     trial_id: str
@@ -43,6 +52,7 @@ class TrialHealthResponse(BaseModel):
     breakdown: HealthScoreBreakdown
     why_at_risk: List[RiskFactor]
     recommended_actions: List[RecommendedAction]
+
 
 class TrialBase(BaseModel):
     id: str
@@ -61,15 +71,19 @@ class TrialBase(BaseModel):
     ctri_number: Optional[str] = None
     ctri_status: Optional[str] = None
 
+
 class TrialUpdate(BaseModel):
     status: Optional[str] = None
     current_enrollment: Optional[int] = None
 
+
 class AlertResolution(BaseModel):
     resolution_note: str
 
+
 class AlertAssignment(BaseModel):
     assigned_to: str
+
 
 class QueryResolution(BaseModel):
     resolution_note: str

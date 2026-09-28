@@ -31,6 +31,11 @@ function ProtectedRoute({ children }) {
   return children;
 }
 
+function ModuleRoute({ moduleId, children }) {
+  const { canAccessModule } = useAuth();
+  return canAccessModule(moduleId) ? children : <Navigate to="/" replace />;
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -49,22 +54,22 @@ export default function App() {
                 </ProtectedRoute>
               }
             >
-              <Route index element={<DashboardPage />} />
-              <Route path="trials" element={<TrialsPage />} />
-              <Route path="trials/:id" element={<TrialDetailPage />} />
-              <Route path="participants" element={<ParticipantsPage />} />
-              <Route path="sites" element={<SitesPage />} />
-              <Route path="milestones" element={<MilestonesPage />} />
-              <Route path="pharmacovigilance" element={<PharmacovigilancePage />} />
-              <Route path="regulatory-ethics" element={<RegulatoryEthicsPage />} />
-              <Route path="data-quality" element={<DataQualityPage />} />
-              <Route path="risk-alerts" element={<RiskAlertsPage />} />
-              <Route path="reports-exports" element={<ReportsExportsPage />} />
-              <Route path="audit-trail" element={<AuditTrailPage />} />
-              <Route path="interoperability" element={<InteroperabilityPage />} />
-              <Route path="security-compliance" element={<SecurityCompliancePage />} />
-              <Route path="users-roles" element={<UsersRolesPage />} />
-              <Route path="settings" element={<SettingsPage />} />
+              <Route index element={<ModuleRoute moduleId="dashboard"><DashboardPage /></ModuleRoute>} />
+              <Route path="trials" element={<ModuleRoute moduleId="trials"><TrialsPage /></ModuleRoute>} />
+              <Route path="trials/:id" element={<ModuleRoute moduleId="trials"><TrialDetailPage /></ModuleRoute>} />
+              <Route path="participants" element={<ModuleRoute moduleId="participants"><ParticipantsPage /></ModuleRoute>} />
+              <Route path="sites" element={<ModuleRoute moduleId="sites"><SitesPage /></ModuleRoute>} />
+              <Route path="milestones" element={<ModuleRoute moduleId="milestones"><MilestonesPage /></ModuleRoute>} />
+              <Route path="pharmacovigilance" element={<ModuleRoute moduleId="pv"><PharmacovigilancePage /></ModuleRoute>} />
+              <Route path="regulatory-ethics" element={<ModuleRoute moduleId="regulatory"><RegulatoryEthicsPage /></ModuleRoute>} />
+              <Route path="data-quality" element={<ModuleRoute moduleId="dataQuality"><DataQualityPage /></ModuleRoute>} />
+              <Route path="risk-alerts" element={<ModuleRoute moduleId="riskAlerts"><RiskAlertsPage /></ModuleRoute>} />
+              <Route path="reports-exports" element={<ModuleRoute moduleId="reports"><ReportsExportsPage /></ModuleRoute>} />
+              <Route path="audit-trail" element={<ModuleRoute moduleId="auditTrail"><AuditTrailPage /></ModuleRoute>} />
+              <Route path="interoperability" element={<ModuleRoute moduleId="interoperability"><InteroperabilityPage /></ModuleRoute>} />
+              <Route path="security-compliance" element={<ModuleRoute moduleId="security"><SecurityCompliancePage /></ModuleRoute>} />
+              <Route path="users-roles" element={<ModuleRoute moduleId="users"><UsersRolesPage /></ModuleRoute>} />
+              <Route path="settings" element={<ModuleRoute moduleId="settings"><SettingsPage /></ModuleRoute>} />
             </Route>
 
             {/* Fallback */}

@@ -151,17 +151,17 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
           })}
         </nav>
 
-        {/* Compliance Footer Tag */}
+        {/* Demo environment notice */}
         <div className="p-3 border-t border-slate-800 bg-slate-950/40 text-[11px] text-slate-400 space-y-1">
           <div className="flex items-center justify-between">
             <span className="text-slate-400 flex items-center gap-1 font-medium">
               <ShieldCheck className="w-3.5 h-3.5 text-teal-400" />
-              GCP-ASU & NDCT
+              SIH DEMO
             </span>
-            <span className="text-[10px] text-slate-400 font-mono">v2.4-PROD</span>
+            <span className="text-[10px] text-slate-400 font-mono">SYNTHETIC DATA</span>
           </div>
           <p className="text-[10px] text-slate-400 leading-tight">
-            Designed to support ICMR 2017 & 21 CFR Part 11 requirements
+            Prototype only; not validated for clinical use.
           </p>
         </div>
       </aside>

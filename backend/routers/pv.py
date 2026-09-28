@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from ..database.connection import get_db
-from ..models.models import AdverseEvent
+from database.connection import get_db
+from models.models import AdverseEvent
 
 router = APIRouter(prefix="/safety", tags=["Pharmacovigilance"])
 

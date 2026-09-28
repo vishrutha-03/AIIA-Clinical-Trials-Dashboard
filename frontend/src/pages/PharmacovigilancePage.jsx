@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   ShieldAlert,
   AlertCircle,
@@ -77,11 +77,11 @@ export default function PharmacovigilancePage() {
               ASU&H Pharmacovigilance Centre
             </h1>
             <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 border border-purple-200">
-              NPvCC AIIA Node
+              Demo Safety Register
             </span>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-            Adverse Event surveillance, MedDRA & WHODrug standardized coding, WHO-UMC causality assessment & safety signals
+            Synthetic adverse-event records and example safety review fields; terminology and causality are not clinically validated.
           </p>
         </div>
 
@@ -99,36 +99,36 @@ export default function PharmacovigilancePage() {
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
         <KpiCard
           title="Total AE Reports"
-          value="42"
-          subtitle="All 12 studies"
+          value={aeReports.length}
+          subtitle="Records in this demo"
           icon={ShieldAlert}
           status="normal"
         />
         <KpiCard
           title="SAE Reports"
-          value="7"
-          subtitle="Hospitalization/Significant"
+          value={aeReports.filter((ae) => ae.seriousness?.startsWith('Yes')).length}
+          subtitle="Marked serious in sample"
           icon={AlertCircle}
           status="danger"
         />
         <KpiCard
           title="Under Review"
-          value="3"
-          subtitle="Causality pending"
+          value={aeReports.filter((ae) => ae.reviewStatus === 'Under Review').length}
+          subtitle="Review status in sample"
           icon={Clock}
           status="warning"
         />
         <KpiCard
           title="Resolved"
-          value="32"
-          subtitle="Patient recovered"
+          value={aeReports.filter((ae) => ae.safetyStatus === 'Resolved').length}
+          subtitle="Marked resolved in sample"
           icon={CheckCircle2}
           status="success"
         />
         <KpiCard
           title="Reporting Due"
-          value="2"
-          subtitle="Expedited to IEC/CDSCO"
+          value={aeReports.filter((ae) => /pending/i.test(ae.regulatorySubmissionStatus || '')).length}
+          subtitle="Submission text says pending"
           icon={Clock}
           status="danger"
         />
@@ -144,7 +144,7 @@ export default function PharmacovigilancePage() {
             </h2>
           </div>
           <span className="text-[11px] font-semibold text-purple-700 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200">
-            DSMB Review Pipeline
+            Example Signal Records
           </span>
         </div>
 

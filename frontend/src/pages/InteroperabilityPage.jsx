@@ -49,7 +49,7 @@ export default function InteroperabilityPage() {
             </span>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-            Architecture for Electronic Data Capture (EDC), Hospital Information Systems (HIS), ABDM, and CDISC regulatory submissions
+            Sample JSON generated from synthetic records. No EDC, hospital, ABDM, or regulatory systems are connected in this demo.
           </p>
         </div>
       </div>
@@ -61,34 +61,34 @@ export default function InteroperabilityPage() {
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
               <Network className="w-4 h-4 text-teal-700" />
-              Healthcare Ecosystem Integration (HL7 FHIR R4)
+              FHIR R4 Export Preview
             </h2>
-            <span className="text-[10px] uppercase font-bold text-slate-400">REST API Bridge</span>
+            <span className="text-[10px] uppercase font-bold text-slate-400">Sample JSON</span>
           </div>
 
           <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-4">
             <div className="flex items-center justify-between text-xs font-bold text-slate-800 bg-white p-3 rounded border border-slate-200 shadow-2xs">
-              <span className="text-teal-800">AIIA CTMS Platform</span>
-              <span className="text-slate-400">Core System of Record</span>
+              <span className="text-teal-800">AIIA CTMS demo data</span>
+              <span className="text-slate-400">Synthetic records</span>
             </div>
 
             <div className="flex flex-col items-center justify-center text-slate-400">
               <div className="h-4 w-0.5 bg-slate-300" />
               <span className="text-[10px] font-mono font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
-                HTTPS REST API / OAuth2 Bearer
+                Local FHIR R4 transformation preview
               </span>
               <div className="h-4 w-0.5 bg-slate-300" />
             </div>
 
             <div className="flex items-center justify-between text-xs font-bold text-slate-800 bg-teal-50 p-3 rounded border border-teal-200 shadow-2xs">
-              <span className="text-teal-900">HL7 FHIR R4 Transformation Adapter</span>
-              <span className="text-xs font-mono text-teal-700">JSON-LD / REST</span>
+              <span className="text-teal-900">FHIR R4 Bundle preview</span>
+              <span className="text-xs font-mono text-teal-700">Generated in this browser</span>
             </div>
 
             <div className="flex flex-col items-center justify-center text-slate-400">
               <div className="h-4 w-0.5 bg-slate-300" />
               <span className="text-[10px] font-mono font-bold text-slate-600 bg-slate-200 px-2 py-0.5 rounded">
-                Bidirectional Sync
+                Planned integration · no live sync
               </span>
               <div className="h-4 w-0.5 bg-slate-300" />
             </div>
@@ -97,23 +97,23 @@ export default function InteroperabilityPage() {
               <div className="p-2.5 rounded bg-white border border-slate-200 shadow-2xs">
                 <Database className="w-4 h-4 text-blue-600 mx-auto mb-1" />
                 <strong className="block text-[11px] text-slate-800">EDC Systems</strong>
-                <span className="text-[10px] text-slate-400">REDCap / OpenClinica</span>
+                <span className="text-[10px] text-slate-400">Not connected</span>
               </div>
               <div className="p-2.5 rounded bg-white border border-slate-200 shadow-2xs">
                 <Building className="w-4 h-4 text-emerald-600 mx-auto mb-1" />
                 <strong className="block text-[11px] text-slate-800">Hospital EHR / HIS</strong>
-                <span className="text-[10px] text-slate-400">AIIA e-Hospital</span>
+                <span className="text-[10px] text-slate-400">Not connected</span>
               </div>
               <div className="p-2.5 rounded bg-white border border-slate-200 shadow-2xs">
                 <Server className="w-4 h-4 text-purple-600 mx-auto mb-1" />
                 <strong className="block text-[11px] text-slate-800">ABDM Gateway</strong>
-                <span className="text-[10px] text-slate-400">ABHA Health ID Sync</span>
+                <span className="text-[10px] text-slate-400">Not connected</span>
               </div>
             </div>
           </div>
 
           <p className="text-[11px] text-slate-500">
-            *Mock interface representation demonstrating system integration readiness for National Digital Health Mission standards.
+            Integration destinations are illustrative only; no external services are contacted.
           </p>
         </div>
 
@@ -131,37 +131,37 @@ export default function InteroperabilityPage() {
             <div className="grid grid-cols-4 gap-2 text-center text-xs">
               <div className="p-2 rounded bg-white border border-slate-200">
                 <span className="text-[10px] font-bold text-slate-400">Data Collection</span>
-                <strong className="block text-teal-800 mt-1">CDASH</strong>
-                <span className="text-[9px] text-slate-400">Standard eCRFs</span>
+                <strong className="block text-teal-800 mt-1">eCRF sample</strong>
+                <span className="text-[9px] text-slate-400">No CDASH validation</span>
               </div>
               <div className="p-2 rounded bg-white border border-slate-200">
                 <span className="text-[10px] font-bold text-slate-400">Tabulation</span>
-                <strong className="block text-blue-800 mt-1">SDTM v3.3</strong>
-                <span className="text-[9px] text-slate-400">DM, AE, DS, LB</span>
+                <strong className="block text-blue-800 mt-1">SDTM DM</strong>
+                <span className="text-[9px] text-slate-400">Demo domain only</span>
               </div>
               <div className="p-2 rounded bg-white border border-slate-200">
                 <span className="text-[10px] font-bold text-slate-400">Analysis</span>
-                <strong className="block text-purple-800 mt-1">ADaM v2.1</strong>
-                <span className="text-[9px] text-slate-400">ADSL, ADAE</span>
+                <strong className="block text-purple-800 mt-1">ADaM</strong>
+                <span className="text-[9px] text-slate-400">Not generated</span>
               </div>
               <div className="p-2 rounded bg-white border border-slate-200">
                 <span className="text-[10px] font-bold text-slate-400">Metadata</span>
                 <strong className="block text-amber-800 mt-1">Define-XML</strong>
-                <span className="text-[9px] text-slate-400">W3C Compliant</span>
+                <span className="text-[9px] text-slate-400">Not generated</span>
               </div>
             </div>
 
             <div className="p-3 bg-white rounded border border-slate-200 text-xs space-y-2">
               <h4 className="font-bold text-slate-800">ASU&H Standardized Terminology Harmonization</h4>
               <p className="text-[11px] text-slate-600 leading-relaxed">
-                AIIA CTMS bridges classical Ayurvedic diagnostic categorizations (Prakriti, Rogi Pareeksha, Dosha Dushya Sammurchana) into internationally recognized MedDRA terms (System Organ Classes) and WHODrug codes for global peer-reviewed clinical dossiers.
+                Example terminology fields illustrate a future mapping workflow. This demo does not perform validated MedDRA or WHODrug coding.
               </p>
             </div>
 
             <div className="flex items-center justify-between p-2.5 bg-emerald-50 rounded border border-emerald-200 text-xs text-emerald-900">
               <span className="font-semibold flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                Validatable with OpenCDISC / Pinnacle 21 Community Rules
+                Sample export only · not validated with Pinnacle 21
               </span>
             </div>
           </div>
@@ -174,7 +174,7 @@ export default function InteroperabilityPage() {
           <div>
             <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
               <FileCode className="w-4 h-4 text-teal-700" />
-              Live Interoperability Schema Viewer (Study: {sampleTrial.id})
+              Sample Payload Preview (Study: {sampleTrial.id})
             </h3>
             <p className="text-xs text-slate-500">
               Inspect generated JSON payloads for HL7 FHIR R4 Bundle vs CDISC SDTM tabulations

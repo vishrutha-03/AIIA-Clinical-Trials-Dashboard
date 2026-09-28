@@ -15,29 +15,29 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
-    setTimeout(() => {
-      const result = login(email, password);
-      setLoading(false);
-      if (result.success) {
-        navigate('/');
-      } else {
-        setError(result.error);
-      }
-    }, 300);
+    const result = await login(email, password);
+    setLoading(false);
+    if (result.success) {
+      navigate('/');
+    } else {
+      setError(result.error);
+    }
   };
 
-  const handleQuickLogin = (demoEmail) => {
+  const handleQuickLogin = async (demoEmail) => {
     setEmail(demoEmail);
     setPassword('AIIA@123');
     setError('');
-    const result = login(demoEmail, 'AIIA@123');
+    const result = await login(demoEmail, 'AIIA@123');
     if (result.success) {
       navigate('/');
+    } else {
+      setError(result.error);
     }
   };
 
@@ -180,14 +180,14 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Security & Regulatory Footnote */}
+        {/* Demo data notice */}
         <div className="text-center mt-6 text-xs text-slate-400 space-y-1">
           <p className="flex items-center justify-center gap-1.5 font-medium text-slate-300">
             <Shield className="w-3.5 h-3.5 text-teal-400" />
-            Designed to support GCP-ASU & NDCT Rules 2019 Compliance
+            SIH presentation prototype · Synthetic records only
           </p>
           <p className="text-[11px] text-slate-500">
-            All India Institute of Ayurveda • Ministry of Ayush, Government of India
+            Not a validated system for clinical or regulatory decisions
           </p>
         </div>
       </div>
